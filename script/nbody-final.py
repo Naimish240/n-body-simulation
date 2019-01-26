@@ -146,16 +146,17 @@ def getInput():
         l.append(Body(posn, m, v, name))
 
 
-if __name__ == "__main__":
+def main():
 
     #build list of bodies in the simulation
+    '''
     body = [
         Body( posn = Point(0,0,0), m = 5e10, v = Point(0,0,0), name = "Body1" ),
         Body( posn = Point(0,1e5,0), m = 5e10, v = Point(0,0,0), name = "Body2" ),
         Body( posn = Point(0,0,1e5), m = 5e10, v = Point(0,0,0), name = "Body3" ),
         ]
-    
-    '''body = getInput()'''
+    '''
+    body = getInput()
 
     bodies = deepcopy(body)
 
@@ -166,12 +167,25 @@ if __name__ == "__main__":
     print("Running the simulation...")
     motions = run(bodies, dt, steps, report)
 
+    # Getting current time
     time = datetime.now().strftime("%y-%m-%d-%H-%M")
     
+    # Creating the folder to save the output files to 
     mkdir(r'run_{}'.format(time))
 
     print("Saving the log...")
     log(body, motions, outfile = r'run_{}/orbits_{}.txt'.format(time, time))
+    print("Saved the log")
 
     print("Saving the plot...")
     plot(motions, outfile = r'run_{}/orbits_{}.png'.format(time, time))
+    print("Saved the plot")
+
+if __name__ == '__main__':
+    ch = 1
+    while ch == 'y':
+        print("Running n body simulation")
+        main()
+        ch = input("Enter 'y' to run again, 'n' to quit: ").lower()
+
+    print("Simulation Terminated")
