@@ -1,0 +1,12 @@
+Name: Body 1
+Mass: 10.0
+Initial Position: (0.0,5.0,8.0)
+Initial Velocity: (0.0,0.0,0.0)
+Name: Body 2
+Mass: 1.0
+Initial Position: (5.0,8.0,0.0)
+Initial Velocity: (0.0,-5.0,0.0)
+Body 1
+[]
+Body 2
+[]
