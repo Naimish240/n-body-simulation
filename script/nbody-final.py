@@ -151,7 +151,7 @@ def getInput():
 def main():
 
     #build list of bodies in the simulation
-    
+    '''
     body = [
         Body( posn = Point(0,0,0), m = 5e10, v = Point(0,0,0), name = "Body1" ),
         Body( posn = Point(0,1e5,0), m = 5e10, v = Point(0,0,0), name = "Body2" ),
@@ -159,7 +159,7 @@ def main():
         ]
     '''
     body = getInput()
-    '''
+    
 
     while len(body) < 2:
         print("Sorry, we need atleast two bodies to simulate")
