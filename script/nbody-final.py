@@ -1,10 +1,15 @@
 from math import sqrt
 from random import choice
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 from datetime import datetime
 from copy import deepcopy
-from os import mkdir
+from os import mkdir, system
+
+# Requires user to have pip
+try:
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
+except:
+    system('pip install matplotlib')
 
 # --------------------------------- Class Point ---------------------------------
 class Point(object):
