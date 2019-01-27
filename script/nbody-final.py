@@ -67,25 +67,24 @@ def newLocn(bodies, dt):
         i.posn.z += i.v.z * dt
 
 # Function to plot bodies
-def plot(bodies, outfile):
+def plot(bodies, outfile, show = True):
     fig = plt.figure()
     colours = ['r','b','g','y','m','c']
     ax = fig.add_subplot(1,1,1, projection='3d')
-    max_range = 0
-    for current_Body in bodies: 
-        max_dim = max(max(current_Body["x"]),max(current_Body["y"]),max(current_Body["z"]))
-        if max_dim > max_range:
-            max_range = max_dim
-        ax.plot(current_Body["x"], current_Body["y"], current_Body["z"], c = choice(colours), label = current_Body["name"])        
     
-    ax.set_xlim([-max_range,max_range])    
-    ax.set_ylim([-max_range,max_range])
-    ax.set_zlim([-max_range,max_range])
-    ax.legend()        
+    for body in bodies:
+        x = body['x']
+        y = body['y']
+        z = body['z']
+        ax.plot(x,y,z, c = choice(colours), label = body['name'])
 
-    if outfile:
-        plt.savefig(outfile)
-    else:
+    ax.set_xlabel('x axis')
+    ax.set_ylabel('y axis')
+    ax.set_zlabel('z axis')
+
+    plt.savefig(outfile)
+
+    if show:
         plt.show()
 
 # Function to run the simulation
@@ -102,9 +101,13 @@ def run(bodies, dt , steps , report_freq):
         
         if i % report_freq == 0:
             for i, Body_location in enumerate(Body_locations_hist):
-                Body_location["x"].append(bodies[i].posn.x)
-                Body_location["y"].append(bodies[i].posn.y)           
-                Body_location["z"].append(bodies[i].posn.z)       
+                x = bodies[i].posn.x
+                y = bodies[i].posn.y
+                z = bodies[i].posn.z
+
+                Body_location["x"].append(x)
+                Body_location["y"].append(y)           
+                Body_location["z"].append(z)
 
     return Body_locations_hist        
 
@@ -145,11 +148,10 @@ def getInput():
 
         l.append(Body(posn, m, v, name))
 
-
 def main():
 
     #build list of bodies in the simulation
-    '''
+    
     body = [
         Body( posn = Point(0,0,0), m = 5e10, v = Point(0,0,0), name = "Body1" ),
         Body( posn = Point(0,1e5,0), m = 5e10, v = Point(0,0,0), name = "Body2" ),
@@ -157,6 +159,11 @@ def main():
         ]
     '''
     body = getInput()
+    '''
+
+    while len(body) < 2:
+        print("Sorry, we need atleast two bodies to simulate")
+        body = getInput()
 
     bodies = deepcopy(body)
 
@@ -177,12 +184,12 @@ def main():
     log(body, motions, outfile = r'run_{}/orbits_{}.txt'.format(time, time))
     print("Saved the log")
 
-    print("Saving the plot...")
+    print("Saving the final plot...")
     plot(motions, outfile = r'run_{}/orbits_{}.png'.format(time, time))
     print("Saved the plot")
 
 if __name__ == '__main__':
-    ch = 1
+    ch = 'y'
     while ch == 'y':
         print("Running n body simulation")
         main()
